@@ -1,0 +1,22 @@
+aca_shop_home:
+    path:     /
+    defaults: { _controller: AcaShopBundle:Home:index }
+
+
+  #This will get hit when the user types in a username and a password.
+aca_shop_login:
+    path:     /login_user
+    defaults: { _controller: AcaShopBundle:Home:login }
+
+
+aca_shop_logout:
+    path:     /logout
+    defaults: { _controller: AcaShopBundle:Home:logout }
+
+
+
+
+
+aca_shop_hello:
+    path:     /hello/{name}
+    defaults: { _controller: AcaShopBundle:Default:index }

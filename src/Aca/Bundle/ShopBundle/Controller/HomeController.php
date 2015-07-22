@@ -11,6 +11,8 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
+        $db = $this->get('aca.db');
+
         $session = $this->get('session');
 
         $name = $session->get('name');
@@ -46,7 +48,8 @@ class HomeController extends Controller
 
                 $query = 'SELECT * from aca_user where username= "'.$username.'" and password= "'.$password.'"';
 
-                $db = new DBCommon();
+                $db = $this->get('aca.db');
+
                 $db->setQuery($query);
                 $user = $db->loadObject();
 

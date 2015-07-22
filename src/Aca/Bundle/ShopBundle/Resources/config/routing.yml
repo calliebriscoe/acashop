@@ -14,9 +14,15 @@ aca_shop_logout:
     defaults: { _controller: AcaShopBundle:Home:logout }
 
 
-
+aca_shop_product:
+  path:       /product
+  defaults: { _controller: AcaShopBundle:Product:show }
 
 
 aca_shop_hello:
     path:     /hello/{name}
     defaults: { _controller: AcaShopBundle:Default:index }
+
+aca_shop_add_cart:
+    path:   /add_cart
+    defaults: { _controller: AcaShopBundle:Cart:add }

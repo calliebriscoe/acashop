@@ -5,6 +5,19 @@
 
     <table>
 
+    <thead>
+      <tr>
+              <th>Image</th>
+              <th>Product Details</th>
+              <th>Price</th>
+              <th>Quantity</th>
+
+
+
+      </tr>
+
+    </thead>
+
     {% for product in products %}
 
 
@@ -16,8 +29,29 @@
 
         <td>
           <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+        </td>
+
+        <td>
           <h5>Price: {{ product.price }}</h5>
+          <h5>Quantity: {{ product.quantity }}</h5>
+          <h5>Total Product Price: {{ product.total_price }}</h5>
+
+        </td>
+        <td>
+          <form name="remove" action="/remove_cart" method="post">
+            <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+            <button class="btn btn-danger">Remove Item</button>
           </form>
+
+
+          <form name="updateQuantity" action="/update_quantity" method="post">
+            <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+            <input type="text" size="2" value="{{ product.quantity }}"/>
+            <button class="btn btn-primary">Update Quantity</button>
+
+          </form>
+
         </td>
 
       <tr>
@@ -25,7 +59,9 @@
     {% endfor %}
 
 
+
         </table>
 
+<h4>Grand Total: {{ grandTotal|number_format(2) }}</h4>
 
 {% endblock %}

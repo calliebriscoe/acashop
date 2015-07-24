@@ -26,3 +26,12 @@ aca_shop_hello:
 aca_shop_add_cart:
     path:   /add_cart
     defaults: { _controller: AcaShopBundle:Cart:add }
+
+
+aca_shop_display_cart:
+    path:   /cart
+    defaults: { _controller: AcaShopBundle:Cart:show }
+
+aca_shop_remove_cart:
+    path:   /remove_cart
+    defaults: { _controller: AcaShopBundle:Cart:remove }

@@ -35,3 +35,7 @@ aca_shop_display_cart:
 aca_shop_remove_cart:
     path:   /remove_cart
     defaults: { _controller: AcaShopBundle:Cart:remove }
+
+aca_shop_update_cart:
+    path:   /update_cart
+    defaults: { _controller: AcaShopBundle:Cart:update }

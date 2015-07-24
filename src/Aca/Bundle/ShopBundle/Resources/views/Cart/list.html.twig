@@ -39,15 +39,15 @@
 
         </td>
         <td>
-          <form name="remove" action="/remove_cart" method="post">
+          <form name="removeItem" action="/remove_cart" method="post">
             <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
             <button class="btn btn-danger">Remove Item</button>
           </form>
 
 
-          <form name="updateQuantity" action="/update_quantity" method="post">
+          <form name="updateQuantity" action="/update_cart" method="post">
             <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-            <input type="text" size="2" value="{{ product.quantity }}"/>
+            <input type="text" name="quantity" size="2" value="{{ product.quantity }}"/>
             <button class="btn btn-primary">Update Quantity</button>
 
           </form>

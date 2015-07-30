@@ -39,3 +39,11 @@ aca_shop_remove_cart:
 aca_shop_update_cart:
     path:   /update_cart
     defaults: { _controller: AcaShopBundle:Cart:update }
+
+aca_shop_shipping_address:
+    path:   /shipping_address
+    defaults: { _controller: AcaShopBundle:Cart:shippingaddress }
+
+aca_shop_place_order:
+    path:   /place_order
+    defaults: { _controller: AcaShopBundle:Order:placeorder }

@@ -61,7 +61,13 @@
 
 
         </table>
-
+<div style="float:right">
 <h4>Grand Total: {{ grandTotal|number_format(2) }}</h4>
 
+</br>
+
+<form action="/shipping_address" method="post">
+  <button type="submit" class="btn btn-info">Next Step: Shipping Address</button>
+</form>
+</div>
 {% endblock %}

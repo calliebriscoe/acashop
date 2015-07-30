@@ -1,0 +1,71 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<h3>Shipping and Billing Address</h3>
+
+<form name="addressForm" action="/place_order" method="post">
+  <table>
+
+    <tr>
+
+      <td>
+
+        <h4>Billing Address</h4>
+          <label for="billing_street">Street: </label>
+          <input type="text" name="billing_street" value="{{ billing.street }}"/>
+          </br>
+
+          <label for="billing_city">City: </label>
+          <input type="text" name="billing_city" value="{{ billing.city }}"/>
+          </br>
+
+          <label for="billing_state">State: </label>
+          <input type="text" name="billing_state" value="{{ billing.state }}"/>
+          </br>
+
+          <label for="billing_Zip">Zipcode: </label>
+          <input type="text" name="billing_zip" value="{{ billing.zip }}"/>
+          </br>
+
+      </td>
+
+      <td>
+
+        <h4>Shipping Address</h4>
+          <label for="shipping_street">Street: </label>
+          <input type="text" name="shipping_street" value="{{ shipping.street }}"/>
+          </br>
+
+          <label for="shipping_city">City: </label>
+          <input type="text" name="shipping_city" value="{{ shipping.city }}"/>
+          </br>
+
+          <label for="shipping_state">State: </label>
+          <input type="text" name="shipping_state" value="{{ shipping.state }}"/>
+          </br>
+
+          <label for="shipping_Zip">Zipcode: </label>
+          <input type="text" name="shipping_zip" value="{{ shipping.zip }}"/>
+          </br>
+
+      </td>
+
+
+    </tr>
+
+  </table>
+
+<div style="float:right">
+
+</br>
+
+<form action="/place_order" method="post">
+  <button type="submit" class="btn btn-info">Next Step: Place Order</button>
+</form>
+</div>
+
+</form>
+
+
+
+{% endblock %}

@@ -149,7 +149,45 @@ class CartController extends Controller
             return new RedirectResponse('/cart');
           }
 
+          public function shippingaddressAction()
+          {
+            $session = $this->get('session');
+
+            $userId = $session->get('user_id');
+
+            $all = $session->all();
+
+            $db = $this ->get('aca.db');
+
+            $query = 'select shipping_address_id,billing_address_id from aca_user where user_id = ' . $userId;
+
+            $db->setQuery($query);
+            $shippingIds = $db->loadObject();
+
+            $billingAddressId = $shippingIds->billing_address_id;
+            $shippingAddressId = $shippingIds->shipping_address_id;
+
+            $shippingQuery = 'select * from aca_address where address_id =' . $shippingAddressId;
+
+            $billingQuery = 'select * from aca_address where address_id =' . $billingAddressId;
+
+            $db->setQuery($shippingQuery);
+            $shippingAddress = $db->loadObject();
+
+            $db->setQuery($billingQuery);
+            $billingAddress = $db->loadObject();
+
+            return $this->render('AcaShopBundle:Shipping:address.html.twig',
+            array(
+              'billing' => $billingAddress,
+              'shipping' => $shippingAddress
+
+            ));
+
+            echo '<pre>';
+            print_r($all);
 
 
+          }
 
 }

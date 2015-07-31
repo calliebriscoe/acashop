@@ -1,0 +1,77 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<h4>Thank you for your Order!</h4>
+
+<table>
+  <tr>
+    <td>
+      <h2>Shipping</h2>
+        {{ shipping.Street }}</br>
+        {{ shipping.City }}, {{ shipping.State }}, {{ shipping.Zip }}
+    </td>
+    <td>
+      <h2>Billing</h2>
+        {{ billing.Street }}</br>
+        {{ billing.City }}, {{ billing.State }}, {{ billing.Zip }}
+    </td>
+  </tr>
+</table>
+
+<table>
+
+<h4>Order Products</h4>
+
+{% set orderTotal = 0 %}
+{% if products is not empty %}
+
+<thead>
+  <tr>
+          <th>Image</th>
+          <th>Product Details</th>
+          <th>Price</th>
+          <th>Quantity</th>
+
+
+
+  </tr>
+
+</thead>
+<tbody>
+
+{% for product in products %}
+
+  {% set orderTotal = orderTotal + product.price %}
+
+
+  <tr>
+
+    <td style="width:200px">
+      <img src="{{ product.image }}" height="30%" width="100%" />
+    </td>
+
+    <td>
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+    </td>
+    <td>
+      <h5>Quantity: {{ product.quantity }}</h5>
+    </td>
+    <td>
+      <h5>Total Price: {{ product.price }}</h5>
+    </td>
+
+  </tr>
+
+{% endfor %}
+
+</tbody>
+
+    </table>
+
+{% endif %}
+
+<div style="float:right; color:green; font-size:2em;"> Order Total: {{ orderTotal }}</div>
+
+{% endblock %}

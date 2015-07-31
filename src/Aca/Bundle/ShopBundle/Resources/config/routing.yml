@@ -27,7 +27,6 @@ aca_shop_add_cart:
     path:   /add_cart
     defaults: { _controller: AcaShopBundle:Cart:add }
 
-
 aca_shop_display_cart:
     path:   /cart
     defaults: { _controller: AcaShopBundle:Cart:show }
@@ -47,3 +46,7 @@ aca_shop_shipping_address:
 aca_shop_place_order:
     path:   /place_order
     defaults: { _controller: AcaShopBundle:Order:placeorder }
+
+aca_shop_receipt:
+    path:   /receipt
+    defaults: { _controller: AcaShopBundle:Receipt:receipt }

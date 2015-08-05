@@ -5,10 +5,10 @@ use Aca\Bundle\ShopBundle\Db\DBCommon;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ReceiptController extends Controller
+class ReviewController extends Controller
 {
 
-  public function receiptAction()
+  public function showAction()
   {
     $session = $this->get('session');
     $userId = $session->get('user_id');
@@ -23,6 +23,8 @@ class ReceiptController extends Controller
 
     $billingAddress = null;
     $shippingAddress = null;
+
+    die();
 
     foreach ($orderAddresses as $orderAddress) {
       if ($orderAddress->type == 'billing') {

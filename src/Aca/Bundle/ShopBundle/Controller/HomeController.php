@@ -11,6 +11,9 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
+        
+
+
         $db = $this->get('aca.db');
 
         $session = $this->get('session');

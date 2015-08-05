@@ -4,6 +4,7 @@ namespace Aca\Bundle\ShopBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Aca\Bundle\ShopBundle\Db\DBCommon;
+use Aca\Bundle\ShopBundle\Shop\Cart;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -57,44 +58,22 @@ class CartController extends Controller
           $db = $this ->get('aca.db');
           $session = $this->get('session');
 
+          $product = $this->get('aca.product');
+          $cart = $this->get('aca.cart');
+
           $cartItems = $session->get('cart');
 
+          $cartProductIds = $cart->getProductIds();
 
-          $cartProductIds = [];
+          $dbProducts = $product->getProductsByProductIds($cartProductIds);
 
-          foreach($cartItems as $cartItem) {
-            $cartProductIds[] = $cartItem['product_id'];
+          // echo '<pre>';
+          // print_r($dbProducts);
+          // die();
+          $userSelectedProducts = $cart->userSelectedProducts($cartItems, $dbProducts, $cartProductIds);
 
-          }
-          $query = 'select * from aca_product where product_id in(' . implode(',', $cartProductIds) . ')';
+          $grandTotal = $cart->grandTotal($cartItems, $dbProducts, $cartProductIds);
 
-
-          $db->setQuery($query);
-          $dbProducts = $db->loadObjectList();
-
-          $userSelectedProducts = [];
-
-          $grandTotal = 0.00;
-
-          foreach($dbProducts as $dbProduct) {
-
-              foreach($cartItems as $cartItem) {
-
-                if($dbProduct->product_id == $cartItem['product_id']){
-                  $dbProduct->quantity = $cartItem['quantity'];
-
-                  $dbProduct->total_price = $dbProduct->price * $cartItem['quantity'];
-                  $grandTotal += $dbProduct->total_price;
-
-                  $userSelectedProducts[] = $dbProduct;
-                }
-
-              }
-          }
-
-                      // foreach($cartItems as $cartitem) {
-                      //
-                      // }
 
           return $this->render('AcaShopBundle:Cart:list.html.twig',
             array(
@@ -110,42 +89,27 @@ class CartController extends Controller
 
           $productId = $_POST['product_id'];
 
-          $session = $this->get('session');
 
-          $cartItems = $session->get('cart');
+          $productRemove = $this->get('aca.cart');
 
+          $productRemoved = $productRemove->removeItem($productId);
 
-            foreach($cartItems as $index => $cartItem){
-               if($cartItem['product_id'] == $productId) {
-                    unset($cartItems[$index]);
-               }
-            }
-            $session->set('cart',$cartItems);
             return new RedirectResponse('/cart');
+
 
           }
 
           public function updateAction()
           {
-
-            $session = $this->get('session');
-
-            $cartItems = $session->get('cart');
-
             $productId = $_POST['product_id'];
-                        // echo 'Product-Id=' . $productId . '<br/>';
 
             $updatedQuantity = $_POST['quantity'];
-                        // echo 'Quantity=' . $quantity . '<br/>';
+            // echo 'Quantity=' . $quantity . '<br/>';
 
-            foreach($cartItems as $index => $cartItem){
+            $productUpdate = $this->get('aca.cart');
 
-              if($cartItem['product_id'] == $productId) {
-                   $cartItems[$index]['quantity'] = $updatedQuantity;
-              }
+            $productUpdated = $productUpdate->updateItem($productId, $updatedQuantity);
 
-            }
-            $session->set('cart',$cartItems);
             return new RedirectResponse('/cart');
           }
 

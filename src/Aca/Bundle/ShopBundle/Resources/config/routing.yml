@@ -50,3 +50,7 @@ aca_shop_place_order:
 aca_shop_receipt:
     path:   /receipt
     defaults: { _controller: AcaShopBundle:Receipt:receipt }
+
+aca_shop_review:
+    path:   /review
+    defaults: { _controller: AcaShopBundle:Review:show }

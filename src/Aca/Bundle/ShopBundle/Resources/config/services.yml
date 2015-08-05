@@ -2,3 +2,15 @@ services:
   aca.db:
       class: Aca\Bundle\ShopBundle\Db\DBCommon
       arguments: [%database_host%, %database_user%, %database_password%, %database_name%]
+
+  aca.cart:
+      class: Aca\Bundle\ShopBundle\Shop\Cart
+      arguments: [@aca.db, @session]
+
+  aca.order:
+      class: Aca\Bundle\ShopBundle\Shop\OrderComplete
+      arguments: [@aca.db, @session]
+
+  aca.product:
+    class: Aca\Bundle\ShopBundle\Shop\Product
+    arguments: [@aca.db]

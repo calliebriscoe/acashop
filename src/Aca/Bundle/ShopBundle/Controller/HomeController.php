@@ -14,12 +14,12 @@ class HomeController extends Controller
 
 
 
-        $db = $this->get('aca.db');
-
+        // $db = $this->get('aca.db');
+        //
         $session = $this->get('session');
-
+        //
         $name = $session->get('name');
-
+        //
         $logged_in = $session->get('logged_in');
 
         $errrorMessage = $session->get('error_message');
@@ -45,7 +45,7 @@ class HomeController extends Controller
 
                 $userInfo->UserLogIn();
 
-                return new RedirectResponse('/');
+                return new RedirectResponse('/product');
 
             }
 

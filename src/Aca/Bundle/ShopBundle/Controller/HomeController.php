@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
-        
+
 
 
         $db = $this->get('aca.db');
@@ -41,32 +41,9 @@ class HomeController extends Controller
             // This logs the user in
             public function loginAction()
             {
-                $session = $this->get('session');
+                $userInfo = $this->get('aca.userinfo');
 
-                $username = $_POST['username'];
-                // echo '$username=' . $username . '</br>';
-
-                $password = $_POST['password'];
-                // echo '$password=' . $password . '</br>';
-
-                $query = 'SELECT * from aca_user where username= "'.$username.'" and password= "'.$password.'"';
-
-                $db = $this->get('aca.db');
-
-                $db->setQuery($query);
-                $user = $db->loadObject();
-
-                if(empty($user)){
-                  $session->set('logged_in', 0);
-                  $session->set('error_message', 'Login failed please try again');
-
-                } else {
-                  $session->set('logged_in', 1);
-                  $session->set('name', $user->name);
-                  $session->set('user_id',$user->user_id);
-                }
-
-
+                $userInfo->UserLogIn();
 
                 return new RedirectResponse('/');
 
@@ -74,9 +51,10 @@ class HomeController extends Controller
 
             public function logoutAction()
             {
-              $session = $this->get('session');
 
-              $session->clear();
+              $userInfo = $this->get('aca.userinfo');
+
+              $userInfo->UserLogOut();
 
               return new RedirectResponse('/');
 

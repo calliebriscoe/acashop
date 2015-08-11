@@ -55,24 +55,12 @@ class CartController extends Controller
         public function showAction()
         {
 
-          $db = $this ->get('aca.db');
-          $session = $this->get('session');
 
-          $product = $this->get('aca.product');
           $cart = $this->get('aca.cart');
 
-          $cartItems = $session->get('cart');
+          $userSelectedProducts = $cart->userSelectedProducts();
 
-          $cartProductIds = $cart->getProductIds();
-
-          $dbProducts = $product->getProductsByProductIds($cartProductIds);
-
-          // echo '<pre>';
-          // print_r($dbProducts);
-          // die();
-          $userSelectedProducts = $cart->userSelectedProducts($cartItems, $dbProducts, $cartProductIds);
-
-          $grandTotal = $cart->grandTotal($cartItems, $dbProducts, $cartProductIds);
+          $grandTotal = $cart->grandTotal();
 
 
           return $this->render('AcaShopBundle:Cart:list.html.twig',
@@ -118,6 +106,15 @@ class CartController extends Controller
             $session = $this->get('session');
 
             $userId = $session->get('user_id');
+
+            if(empty($userId)){
+
+              $session->set('error_message', 'Please login again.');
+
+              return new RedirectResponse('/');
+
+            }
+
 
             $all = $session->all();
 

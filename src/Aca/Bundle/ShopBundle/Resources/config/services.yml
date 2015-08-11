@@ -5,7 +5,7 @@ services:
 
   aca.cart:
       class: Aca\Bundle\ShopBundle\Shop\Cart
-      arguments: [@aca.db, @session]
+      arguments: [@aca.db, @session, @aca.product]
 
   aca.order:
       class: Aca\Bundle\ShopBundle\Shop\OrderComplete
@@ -14,3 +14,7 @@ services:
   aca.product:
     class: Aca\Bundle\ShopBundle\Shop\Product
     arguments: [@aca.db]
+
+  aca.userinfo:
+      class: Aca\Bundle\ShopBundle\Shop\UserInfo
+      arguments: [@aca.db, @session]

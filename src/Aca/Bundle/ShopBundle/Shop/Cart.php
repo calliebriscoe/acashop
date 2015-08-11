@@ -4,7 +4,21 @@ namespace Aca\Bundle\ShopBundle\Shop;
 
   class Cart extends AbstractOrder {
 
+        protected $product;
 
+        protected $grandTotal;
+
+        protected $userSelectedProducts;
+
+
+      public function __construct($db, $session, $product)
+      {
+
+        parent::__construct($db, $session);
+
+        $this->product = $product;
+
+      }
 
       public function removeItem($productId)
       {
@@ -60,6 +74,10 @@ namespace Aca\Bundle\ShopBundle\Shop;
 
         $cartProductIds = [];
 
+        if(empty($cartItems)){
+          throw new \Exception("Your cart is Empty!");
+        }
+
         foreach($cartItems as $cartItem) {
           $cartProductIds[] = $cartItem['product_id'];
 
@@ -69,33 +87,22 @@ namespace Aca\Bundle\ShopBundle\Shop;
 
       }
 
-      public function grandTotal($cartItems, $dbProducts, $cartProductIds)
-      {
+    public function userSelectedProducts()
+    {
 
+      if(isset($this->userSelectedProducts)){
 
-        $grandTotal = 0.00;
-
-            foreach($dbProducts as $dbProduct) {
-
-              foreach($cartItems as $cartItem) {
-
-                if($dbProduct->product_id == $cartItem['product_id']){
-                  $dbProduct->quantity = $cartItem['quantity'];
-
-                  $dbProduct->total_price = $dbProduct->price * $cartItem['quantity'];
-                  $grandTotal += $dbProduct->total_price;
-
-                  }
-
-        }
+            return $this->userSelectedProducts;
 
       }
-      return $grandTotal;
 
-    }
+      $grandTotal = 0.00;
 
-    public function userSelectedProducts($cartItems, $dbProducts, $cartProductIds)
-    {
+      $cartItems = $this->session->get('cart');
+
+      $cartProductIds = $this->getProductIds();
+
+      $dbProducts = $this->product->getProductsByProductIds($cartProductIds);
 
 
       $userSelectedProducts = [];
@@ -109,15 +116,40 @@ namespace Aca\Bundle\ShopBundle\Shop;
 
                 $dbProduct->total_price = $dbProduct->price * $cartItem['quantity'];
 
+                $grandTotal += $dbProduct->total_price;
+
                 $userSelectedProducts[] = $dbProduct;
                 }
 
       }
 
     }
-    return $userSelectedProducts;
+
+    $this->grandTotal = $grandTotal;
+
+    $this->userSelectedProducts = $userSelectedProducts;
+
+    if(empty($userSelectedProducts)){
+      throw new \Exception("Your cart is Empty!");
+    }
+
+    return $this->userSelectedProducts;
 
   }
+
+
+    public function grandTotal()
+    {
+
+      if(!isset($this->userSelectedProducts)){
+
+          $this->userSelectedProducts = $this->userSelectedProducts();
+
+      }
+
+          return $this->grandTotal;
+
+    }
 
 
   }

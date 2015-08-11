@@ -10,39 +10,29 @@ class ReceiptController extends Controller
 
   public function receiptAction()
   {
+
+    $db = $this->get('aca.db');
+
     $session = $this->get('session');
+
+    $OrderComplete = $session->get('OrderComplete');
+
     $userId = $session->get('user_id');
-    $all = $session->all();
+
     $orderId = $session->get('completed_order_id');
-    $db = $this ->get('aca.db');
-
-    $orderQuery = 'select * from aca_order_address where order_id = "' . $orderId . '"';
-
-    $db->setQuery($orderQuery);
-    $orderAddresses = $db->loadObjectList();
-
-    $billingAddress = null;
-    $shippingAddress = null;
-
-    foreach ($orderAddresses as $orderAddress) {
-      if ($orderAddress->type == 'billing') {
-
-      $billingAddress = $orderAddress;
-
-    }else{
-
-      $shippingAddress = $orderAddress;
-
-    }
-  }
 
 
-    $query = 'select o.price, o.quantity, p.name, p.description, p.image from aca_order_product o join aca_product p on (p.product_id = o.product_id)
-    where order_id = "' . $orderId . '"';
+  //   $query = 'select o.price, o.quantity, p.name, p.description, p.image from aca_order_product o join aca_product p on (p.product_id = o.product_id)
+  //   where order_id = "' . $orderId . '"';
+  //
+  $order = $this->get('aca.order');
+  $products = $order->getProducts();
 
-    $db->setQuery($query);
-    $products = $db->loadObjectList();
 
+    $billingAddress = $order->getBillingAddress();
+    $shippingAddress = $order->getShippingAddress();
+
+    $session->remove('cart');
 
     return $this->render('AcaShopBundle:Receipt:receipt.html.twig',
     array(

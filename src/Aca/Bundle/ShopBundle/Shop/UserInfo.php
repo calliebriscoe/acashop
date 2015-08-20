@@ -10,10 +10,10 @@
 
         $username = $_POST['username'];
         // echo '$username=' . $username . '</br>';
-
+        //
         $password = $_POST['password'];
         // echo '$password=' . $password . '</br>';
-
+        //
         $query = 'SELECT * from aca_user where username= "'.$username.'" and password= "'.$password.'"';
 
         $this->db->setQuery($query);

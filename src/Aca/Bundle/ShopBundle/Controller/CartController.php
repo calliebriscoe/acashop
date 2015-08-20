@@ -22,6 +22,8 @@ class CartController extends Controller
                 $quantity = $_POST['quantity'];
                 // echo 'Quantity=' . $quantity . '<br/>';
 
+                // This will set up a new cart from the products provided by the user.
+
                 if(empty($cart)){
 
                   $cart[] = array(
@@ -52,6 +54,8 @@ class CartController extends Controller
                 $session->set('cart',$cart);
                 return new RedirectResponse('/cart');
       }
+
+      // This will show the cart object.
         public function showAction()
         {
 
@@ -73,6 +77,7 @@ class CartController extends Controller
           );
         }
 
+        // This function will remove a item from the cart object.
         public function removeAction(){
 
           $productId = $_POST['product_id'];
@@ -87,6 +92,7 @@ class CartController extends Controller
 
           }
 
+          // This function will update the number of items for a particular item for the cart.
           public function updateAction()
           {
             $productId = $_POST['product_id'];
